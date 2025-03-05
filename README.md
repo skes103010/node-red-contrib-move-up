@@ -1,2 +1,130 @@
-# node-red-contrib-move-up
-測試
+node-red-contrib-move-up
+A Node-RED node that moves an item up in an array based on a specified condition.
+
+Installation
+You can install this node in two ways:
+
+Via npm
+Run the following command in your Node-RED user directory (typically ~/.node-red):
+npm install node-red-contrib-move-up
+
+Via Node-RED Palette Manager
+Open Node-RED editor.
+Click the menu (top-right) → "Manage Palette" → "Install" tab.
+Search for node-red-contrib-move-up and click "Install".
+Usage
+This node moves an item in the order_now array (stored in the flow context) up one position if its id matches the up value (also in flow context). The action is triggered when msg.payload is set to "是".
+
+Inputs
+msg.payload (string): Must be "是" to trigger the move-up action.
+Outputs
+msg.payload (number | array):
+1: Indicates the move was successful or attempted (even if no change occurred).
+0: Indicates the condition was not met (e.g., msg.payload is not "是").
+Updated order_now array: Returned if a move occurs (though typically overridden by 1).
+Flow Context Requirements
+flow.order_now: An array of objects with id properties (e.g., [{id: 1}, {id: 2}, {id: 3}]).
+flow.up: The id of the item to move up (e.g., 2).
+Behavior
+If msg.payload is "是", the node searches order_now for an item with an id matching up.
+If found and not already at the top, it swaps the item with the previous one.
+The updated order_now is saved back to the flow context.
+Example Flow
+Below is a sample flow to demonstrate how to use the move-up node:
+
+[
+{
+"id": "init_context",
+"type": "inject",
+"name": "Initialize Context",
+"props": [{"p": "payload"}],
+"repeat": "",
+"crontab": "",
+"once": true,
+"onceDelay": 0.1,
+"topic": "",
+"payload": "",
+"payloadType": "date",
+"x": 100,
+"y": 100,
+"wires": [["set_context"]]
+},
+{
+"id": "set_context",
+"type": "function",
+"name": "Set order_now and up",
+"func": "flow.set('order_now', [{id: 1}, {id: 2}, {id: 3}]); flow.set('up', 2); msg.payload = 'Context initialized'; return msg;",
+"outputs": 1,
+"noerr": 0,
+"x": 300,
+"y": 100,
+"wires": [["debug_init"]]
+},
+{
+"id": "trigger_move",
+"type": "inject",
+"name": "Trigger Move Up",
+"props": [{"p": "payload"}],
+"repeat": "",
+"crontab": "",
+"once": false,
+"onceDelay": 0.1,
+"topic": "",
+"payload": "是",
+"payloadType": "str",
+"x": 100,
+"y": 200,
+"wires": [["move_up_node"]]
+},
+{
+"id": "move_up_node",
+"type": "move-up",
+"name": "Move Up",
+"x": 300,
+"y": 200,
+"wires": [["debug_output"]]
+},
+{
+"id": "debug_init",
+"type": "debug",
+"name": "Init Result",
+"active": true,
+"tosidebar": true,
+"console": false,
+"tostatus": false,
+"complete": "payload",
+"targetType": "msg",
+"x": 500,
+"y": 100,
+"wires": []
+},
+{
+"id": "debug_output",
+"type": "debug",
+"name": "Output Result",
+"active": true,
+"tosidebar": true,
+"console": false,
+"tostatus": false,
+"complete": "payload",
+"targetType": "msg",
+"x": 500,
+"y": 200,
+"wires": []
+}
+]
+
+Steps
+Deploy the flow in Node-RED.
+Click "Initialize Context" to set flow.order_now to [{id: 1}, {id: 2}, {id: 3}] and flow.up to 2.
+Click "Trigger Move Up" to move the item with id: 2 up.
+Check the debug sidebar: order_now should change to [{id: 2}, {id: 1}, {id: 3}], and msg.payload will be 1.
+Prerequisites
+Node-RED v1.0.0 or later.
+No additional dependencies required.
+License
+MIT License
+
+Author
+Name: skes103010
+GitHub: skes103010
