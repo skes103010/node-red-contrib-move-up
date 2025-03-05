@@ -1,0 +1,50 @@
+<script type="text/html" data-template-name="move-up">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="move-up">
+    <p>A node that moves an item up in the 'order_now' array based on 'up' value.</p>
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">string</span>
+        </dt>
+        <dd>Should be "是" to trigger the move-up logic.</dd>
+    </dl>
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">number | array</span>
+        </dt>
+        <dd>
+            <ul>
+                <li><code>1</code> if the move was successful.</li>
+                <li><code>0</code> if the condition failed or no move occurred.</li>
+                <li><code>array</code> (updated <code>order_now</code>) if a move occurred.</li>
+            </ul>
+        </dd>
+    </dl>
+    <h3>Details</h3>
+    <p>
+        This node checks if <code>msg.payload</code> is "是". If true, it retrieves the <code>order_now</code> array and <code>up</code> value from the flow context, finds the item with matching <code>id</code>, and swaps it with the previous item if possible. The updated array is stored back in <code>order_now</code>.
+    </p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('move-up', {
+        category: 'function',  // 顯示在功能分類中
+        color: '#a6bbcf',     // 節點背景顏色
+        defaults: {
+            name: { value: "" } // 節點名稱
+        },
+        inputs: 1,            // 單一輸入
+        outputs: 1,           // 單一輸出
+        icon: "file.png",     // 節點圖標
+        label: function() {
+            return this.name || "move-up"; // 顯示的名稱
+        }
+    });
+</script>
