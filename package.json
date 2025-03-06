@@ -1,9 +1,10 @@
 {
     "name": "node-red-contrib-move-up",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "A Node-RED node to move an item up in an array based on a condition",
     "keywords": ["node-red", "move-up", "array"],
     "node-red": {
+        "version": ">=2.0.0",
         "nodes": {
             "move-up": "move-up.js"
         }
@@ -17,9 +18,6 @@
     "bugs": {
         "url": "https://github.com/skes103010/node-red-contrib-move-up/issues",
         "email": "skes463083551@gmail.com"
-    },
-    "peerDependencies": {
-        "node-red": ">=2.0.0"
     },
     "engines": {
         "node": ">=12.0.0"

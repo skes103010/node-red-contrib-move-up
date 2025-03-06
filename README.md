@@ -2,6 +2,11 @@
 
 A Node-RED node that moves an item up in an array based on a specified condition.
 
+## Supported Versions
+
+- Supported Node-RED Version: 2.0.0 or later
+- Supported Node.js Version: 12.0.0 or later
+
 ## Installation
 
 You can install this node in two ways:
@@ -36,10 +41,6 @@ This node moves an item in the order_now array (stored in the flow context) up o
 - If msg.payload is "是", the node searches order_now for an item with an id matching up.
 - If found and not already at the top, it swaps the item with the previous one.
 - The updated order_now is saved back to the flow context.
-
-## Example Flow
-
-Below is a sample flow to demonstrate how to use the move-up node:
 
 ### Steps
 1. Deploy the flow in Node-RED.
