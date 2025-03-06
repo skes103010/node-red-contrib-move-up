@@ -1,61 +1,55 @@
 # node-red-contrib-move-up
 
-A Node-RED node that moves an item up in an array based on a specified condition.
+一個基於指定條件將陣列中項目上移的 Node-RED 節點。
 
-## Supported Versions
+## 支援的版本
 
-- Supported Node-RED Version: 2.0.0 or later
-- Supported Node.js Version: 12.0.0 or later
+- 支援的 Node-RED 版本：2.0.0 或更高版本
+- 支援的 Node.js 版本：12.0.0 或更高版本
 
-## Installation
+## 安裝方法
 
-You can install this node in two ways:
+您可以透過以下兩種方式安裝此節點：
 
-### Via npm
-Run the following command in your Node-RED user directory (typically ~/.node-red):
+### 透過 npm
+在您的 Node-RED 使用者目錄（通常為 ~/.node-red）中執行以下命令：
 npm install node-red-contrib-move-up
 
-### Via Node-RED Palette Manager
-1. Open Node-RED editor.
-2. Click the menu (top-right) → "Manage Palette" → "Install" tab.
-3. Search for node-red-contrib-move-up and click "Install".
+### 透過 Node-RED 調色盤管理器
+1. 開啟 Node-RED 編輯器。
+2. 點擊右上角選單 → "管理調色盤" → "安裝" 標籤。
+3. 搜尋 node-red-contrib-move-up 並點擊 "安裝"。
 
-## Usage
+## 使用方法
 
-This node moves an item in the order_now array (stored in the flow context) up one position if its id matches the up value (also in flow context). The action is triggered when msg.payload is set to "是".
+此節點會將 flow 上下文中儲存的 order_now 陣列中的某個項目上移一位，前提是該項目的 id 與 flow 上下文中的 up 值相符。當 msg.payload 設為 "是" 時觸發此動作。
 
-### Inputs
-- msg.payload (string): Must be "是" to trigger the move-up action.
+### 輸入
+- msg.payload (字串)：必須設為 "是" 以觸發上移動作。
 
-### Outputs
-- msg.payload (number | array):
-  - 1: Indicates the move was successful or attempted (even if no change occurred).
-  - 0: Indicates the condition was not met (e.g., msg.payload is not "是").
-  - Updated order_now array: Returned if a move occurs (though typically overridden by 1).
+### 輸出
+- msg.payload (數字 | 陣列)：
+  - 1：表示移動成功或已嘗試移動（即使未發生變化）。
+  - 0：表示條件未滿足（例如 msg.payload 不是 "是"）。
+  - 更新後的 order_now 陣列：若發生移動則返回（通常被 1 覆蓋）。
 
-### Flow Context Requirements
-- flow.order_now: An array of objects with id properties (e.g., [{id: 1}, {id: 2}, {id: 3}]).
-- flow.up: The id of the item to move up (e.g., 2).
+### Flow 上下文需求
+- flow.order_now：一個包含 id 屬性的物件陣列（例如 [{id: 1}, {id: 2}, {id: 3}]）。
+- flow.up：要上移的項目 id（例如 2）。
 
-### Behavior
-- If msg.payload is "是", the node searches order_now for an item with an id matching up.
-- If found and not already at the top, it swaps the item with the previous one.
-- The updated order_now is saved back to the flow context.
+### 行為
+- 若 msg.payload 為 "是"，節點會在 order_now 中搜尋 id 與 up 相符的項目。
+- 若找到且該項目不在頂部，則與前一個項目交換位置。
+- 更新後的 order_now 會儲存回 flow 上下文。
 
-### Steps
-1. Deploy the flow in Node-RED.
-2. Click "Initialize Context" to set flow.order_now to [{id: 1}, {id: 2}, {id: 3}] and flow.up to 2.
-3. Click "Trigger Move Up" to move the item with id: 2 up.
-4. Check the debug sidebar: order_now should change to [{id: 2}, {id: 1}, {id: 3}], and msg.payload will be 1.
+## 先決條件
+- Node-RED v2.0.0 或更高版本
+- Node.js v12.0.0 或更高版本
+- 無額外依賴需求。
 
-## Prerequisites
-- Node-RED v2.0.0 or later
-- Node.js v12.0.0 or later
-- No additional dependencies required.
+## 許可證
+MIT 許可證
 
-## License
-MIT License
-
-## Author
-- Name: skes103010
-- GitHub: [skes103010](https://github.com/skes103010)
+## 作者
+- 姓名：skes103010
+- GitHub：[skes103010](https://github.com/skes103010)
